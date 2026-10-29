@@ -1,0 +1,14 @@
+# secrets and local settings (never commit)
+.secrets/
+config_local.py
+# generated or large files
+*.duckdb
+*.duckdb.wal
+*.parquet
+__pycache__/
+logs_*.txt
+.venv/
+_to_delete/
+
+# README held back until the project is finished
+README.md

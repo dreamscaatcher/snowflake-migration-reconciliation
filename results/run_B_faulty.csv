@@ -1,0 +1,64 @@
+check_id,check_name,table_name,metric,source_value,target_value,difference,tolerance,result,detail
+R01,Row count,dim_property,count(*),680,680,0.0,0.0,PASS,
+R01,Row count,dim_unit,count(*),33000,33000,0.0,0.0,PASS,
+R01,Row count,fact_maintenance_ticket,count(*),149741,149741,0.0,0.0,PASS,
+R01,Row count,fact_rent_roll,count(*),1071175,1070675,500.0,0.0,FAIL,rows lost or loaded twice
+R01,Row count,fact_service_charge_statement,count(*),103327,104327,1000.0,0.0,FAIL,rows lost or loaded twice
+R02,Sum of money column,fact_maintenance_ticket,sum(cost_eur),72244510.80000031,72245054.0,543.1999996900558,0.01,FAIL,"rounding, truncation or lost rows"
+R02,Sum of money column,fact_rent_roll,sum(kaltmiete_due),1616924525.1800847,1616126480.35,798044.8300848007,0.01,FAIL,"rounding, truncation or lost rows"
+R02,Sum of money column,fact_rent_roll,sum(nk_prepayment_due),277515751.060017,277382009.3,133741.7600169778,0.01,FAIL,"rounding, truncation or lost rows"
+R02,Sum of money column,fact_rent_roll,sum(paid_by_due_date),1770074810.4600904,1769208885.16,865925.300090313,0.01,FAIL,"rounding, truncation or lost rows"
+R02,Sum of money column,fact_rent_roll,sum(paid_by_month_end),1822857592.8801043,1821974555.48,883037.4001042843,0.01,FAIL,"rounding, truncation or lost rows"
+R02,Sum of money column,fact_rent_roll,sum(paid_to_snapshot),1875952413.130113,1875039053.63,913359.500112772,0.01,FAIL,"rounding, truncation or lost rows"
+R02,Sum of money column,fact_rent_roll,sum(total_due),1894440276.2401059,1893508489.65,931786.590105772,0.01,FAIL,"rounding, truncation or lost rows"
+R02,Sum of money column,fact_service_charge_statement,sum(actual_costs_total),315232295.8199984,318053997.33,2821701.5100016,0.01,FAIL,"rounding, truncation or lost rows"
+R02,Sum of money column,fact_service_charge_statement,sum(balance_eur),21598508.08000021,21812722.5,214214.41999978945,0.01,FAIL,"rounding, truncation or lost rows"
+R02,Sum of money column,fact_service_charge_statement,sum(forfeited_backpayment_eur),1130177.8600000003,1143464.79,13286.929999999702,0.01,FAIL,"rounding, truncation or lost rows"
+R02,Sum of money column,fact_service_charge_statement,sum(prepayments_total),293633787.739999,296241274.83,2607487.090000987,0.01,FAIL,"rounding, truncation or lost rows"
+R03,Distinct keys,dim_property,distinct keys property_id,680,680,0.0,0.0,PASS,
+R03,Duplicate key rows,dim_property,rows minus distinct keys,0,0,0.0,0.0,PASS,
+R03,Distinct keys,dim_unit,distinct keys unit_id,33000,33000,0.0,0.0,PASS,
+R03,Duplicate key rows,dim_unit,rows minus distinct keys,0,0,0.0,0.0,PASS,
+R03,Distinct keys,fact_maintenance_ticket,distinct keys ticket_id,149741,149741,0.0,0.0,PASS,
+R03,Duplicate key rows,fact_maintenance_ticket,rows minus distinct keys,0,0,0.0,0.0,PASS,
+R03,Distinct keys,fact_rent_roll,distinct keys unit_id+period_month,1071175,1070675,500.0,0.0,FAIL,double load; Snowflake does not enforce keys
+R03,Duplicate key rows,fact_rent_roll,rows minus distinct keys,0,0,0.0,0.0,PASS,
+R03,Distinct keys,fact_service_charge_statement,distinct keys statement_id,103327,103327,0.0,0.0,PASS,
+R03,Duplicate key rows,fact_service_charge_statement,rows minus distinct keys,0,1000,1000.0,0.0,FAIL,double load; Snowflake does not enforce keys
+R04,Null counts per column,dim_property,12 columns,0,0,0.0,0.0,PASS,all columns equal
+R04,Null counts per column,dim_unit,9 columns,2317,2317,0.0,0.0,PASS,all columns equal
+R04,Null counts per column,fact_maintenance_ticket,25 columns,337740,337740,0.0,0.0,PASS,all columns equal
+R04,Null counts per column,fact_rent_roll,10 columns,0,0,0.0,0.0,PASS,all columns equal
+R04,Null counts per column,fact_service_charge_statement,20 columns,29638,29909,271.0,0.0,FAIL,issued_date: 9803 vs 9893; dq_issued_date_invalid: 9735 vs 9824; area_m2: 297 vs 299; days_to_issue: 9803 vs 9893
+R05,Date range (min / max),dim_property,management_since,2008-01-01 / 2022-12-01,2008-01-01 / 2022-12-01,,0.0,PASS,
+R05,Date range (min / max),fact_maintenance_ticket,assigned_at,2024-01-01 04:47:20 / 2026-09-30 23:33:49,2024-01-01 05:47:20 / 2026-10-01 00:33:49,,0.0,FAIL,source 2024-01-01 04:47:20 / 2026-09-30 23:33:49 vs target 2024-01-01 05:47:20 / 2026-10-01 00:33:49
+R05,Date range (min / max),fact_maintenance_ticket,created_at,2024-01-01 00:17:00 / 2026-09-30 23:33:00,2024-01-01 01:17:00 / 2026-10-01 00:33:00,,0.0,FAIL,source 2024-01-01 00:17:00 / 2026-09-30 23:33:00 vs target 2024-01-01 01:17:00 / 2026-10-01 00:33:00
+R05,Date range (min / max),fact_maintenance_ticket,created_date,2024-01-01 / 2026-09-30,2024-01-01 / 2026-09-30,,0.0,PASS,
+R05,Date range (min / max),fact_maintenance_ticket,created_month,2024-01-01 / 2026-09-01,2024-01-01 / 2026-09-01,,0.0,PASS,
+R05,Date range (min / max),fact_maintenance_ticket,resolved_at,2024-01-01 18:19:54 / 2026-09-30 23:55:03,2024-01-01 19:19:54 / 2026-10-01 00:55:03,,0.0,FAIL,source 2024-01-01 18:19:54 / 2026-09-30 23:55:03 vs target 2024-01-01 19:19:54 / 2026-10-01 00:55:03
+R05,Date range (min / max),fact_rent_roll,due_date,2024-01-03 / 2026-09-03,2024-01-03 / 2026-09-03,,0.0,PASS,
+R05,Date range (min / max),fact_rent_roll,period_month,2024-01-01 / 2026-09-01,2024-01-01 / 2026-09-01,,0.0,PASS,
+R05,Date range (min / max),fact_service_charge_statement,issued_date,2024-05-29 / 2026-09-30,2024-05-29 / 2026-09-30,,0.0,PASS,
+R05,Date range (min / max),fact_service_charge_statement,legal_deadline,2024-12-31 / 2026-12-31,2024-12-31 / 2026-12-31,,0.0,PASS,
+R05,Date range (min / max),fact_service_charge_statement,period_end,2023-12-31 / 2025-12-31,2023-12-31 / 2025-12-31,,0.0,PASS,
+R05,Date range (min / max),fact_service_charge_statement,period_start,2023-01-01 / 2025-01-01,2023-01-01 / 2025-01-01,,0.0,PASS,
+R06,Orphan keys,dim_unit,dim_unit.property_id -> dim_property.property_id,0,0,0.0,0.0,PASS,
+R06,Orphan keys,fact_maintenance_ticket,fact_maintenance_ticket.property_id -> dim_property.property_id,0,300,300.0,0.0,FAIL,key case sensitivity or missing parent rows
+R06,Orphan keys,fact_maintenance_ticket,fact_maintenance_ticket.unit_id -> dim_unit.unit_id,0,0,0.0,0.0,PASS,
+R06,Orphan keys,fact_rent_roll,fact_rent_roll.unit_id -> dim_unit.unit_id,0,0,0.0,0.0,PASS,
+R06,Orphan keys,fact_service_charge_statement,fact_service_charge_statement.unit_id -> dim_unit.unit_id,0,0,0.0,0.0,PASS,
+R07,Row-level hash,dim_property,242 buckets,identical,identical,,0.0,PASS,all rows identical
+R07,Row-level hash,dim_unit,256 buckets,identical,identical,,0.0,PASS,all rows identical
+R07,Row-level hash,fact_maintenance_ticket,256 of 256 buckets differ,149741,149741,0.0,0.0,FAIL,"0 rows only in source, 0 only in target, 149741 keys with changed values | key MT000001: created_at: 2024-01-15 15:51:00 -> 2024-01-15 16:51:00, assigned_at: 2024-01-16 00:53:52 -> 2024-01-16 01:53:52, resolved_at: 2024-01-16 19:54:17 -> 2024-01-16 20:54:17, cost_eur: 876.9900 -> 877.0000 | key MT000002: created_at: 2024-01-14 02:18:00 -> 2024-01-14 03:18:00, assigned_at: 2024-01-15 01:03:33 -> 2024-01-15 02:03:33, resolved_at: 2024-01-17 05:15:49 -> 2024-01-17 06:15:49, cost_eur: 182.0400 -> 182.0000 | key MT000003: created_at: 2024-01-12 02:35:00 -> 2024-01-12 03:35:00, assigned_at: 2024-01-12 11:13:37 -> 2024-01-12 12:13:37, resolved_at: 2024-01-18 21:34:56 -> 2024-01-18 22:34:56, cost_eur: 441.8200 -> 442.0000"
+R07,Row-level hash,fact_rent_roll,211 of 256 buckets differ,500,0,500.0,0.0,FAIL,"500 rows only in source, 0 only in target, 0 keys with changed values"
+R07,Row-level hash,fact_service_charge_statement,249 of 256 buckets differ,0,1000,1000.0,0.0,FAIL,"0 rows only in source, 1000 only in target, 0 keys with changed values"
+R08,KPI parity,fact_maintenance_ticket,Median Resolution Hours,136.50694444444446,136.50694444444446,0.0,1e-09,PASS,
+R08,KPI parity,fact_maintenance_ticket,Open Tickets,2951,2951,0.0,0.0,PASS,
+R08,KPI parity,fact_maintenance_ticket,Resolution SLA %,0.8440910356347439,0.8440910356347439,0.0,1e-09,PASS,
+R08,KPI parity,fact_maintenance_ticket,Response SLA %,0.9185702821987428,0.9185702821987428,0.0,1e-09,PASS,
+R08,KPI parity,fact_rent_roll,Collection Rate In Month %,0.962214336203795,0.9622214874868491,7.151283054063207e-06,1e-09,FAIL,"KPI differs: logic, data, or SQL dialect (e.g. integer division precision)"
+R08,KPI parity,fact_rent_roll,Open Arrears at Snapshot (EUR),10701059.159999993,10683886.86,17172.299999993294,0.01,FAIL,"KPI differs: logic, data, or SQL dialect (e.g. integer division precision)"
+R08,KPI parity,fact_rent_roll,Soll total (EUR),1894440276.2398958,1893508489.65,931786.5898957253,0.01,FAIL,"KPI differs: logic, data, or SQL dialect (e.g. integer division precision)"
+R08,KPI parity,fact_service_charge_statement,Avg Days To Issue,234.4027415422779,234.38606857699557,0.01667296528233919,1e-09,FAIL,"KPI differs: logic, data, or SQL dialect (e.g. integer division precision)"
+R08,KPI parity,fact_service_charge_statement,Forfeited Back-payments (EUR),1130177.8600000003,1143464.79,13286.929999999702,0.01,FAIL,"KPI differs: logic, data, or SQL dialect (e.g. integer division precision)"
+R08,KPI parity,fact_service_charge_statement,Statements On Time %,0.9581497797356828,0.9581930236990914,4.324396340860126e-05,1e-09,FAIL,"KPI differs: logic, data, or SQL dialect (e.g. integer division precision)"

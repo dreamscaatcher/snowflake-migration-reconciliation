@@ -1,0 +1,22 @@
+[
+  {
+    "fault": 1,
+    "description": "500 rent-roll rows lost in transit"
+  },
+  {
+    "fault": 2,
+    "description": "Ticket timestamps shifted by +1 hour (timezone error): created_at, assigned_at, resolved_at"
+  },
+  {
+    "fault": 3,
+    "description": "Repair costs rounded to whole euros"
+  },
+  {
+    "fault": 4,
+    "description": "300 ticket property IDs converted to lowercase (case-sensitivity trap)"
+  },
+  {
+    "fault": 5,
+    "description": "One batch of 1,000 service-charge statements loaded twice"
+  }
+]

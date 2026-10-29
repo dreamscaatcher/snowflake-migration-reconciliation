@@ -1,0 +1,11 @@
+table_name,run_label,rows_source,rows_loaded,errors_seen
+dim_unit,run_A_clean,33000,33000,0
+fact_rent_roll,run_A_clean,1071175,1071175,0
+fact_maintenance_ticket,run_A_clean,149741,149741,0
+dim_property,run_A_clean,680,680,0
+fact_service_charge_statement,run_A_clean,103327,103327,0
+fact_maintenance_ticket,run_B_faulty,149741,149741,0
+dim_property,run_B_faulty,680,680,0
+dim_unit,run_B_faulty,33000,33000,0
+fact_service_charge_statement,run_B_faulty,104327,104327,0
+fact_rent_roll,run_B_faulty,1070675,1070675,0
